@@ -26,7 +26,6 @@ add_taint() {
   local node=$1
   local key=$2
   local effect=$3
-  log "$1 $2 $3"
 
   if ! has_taint "$node" "node.kubernetes.io/out-of-service" "$effect"; then
     log "Adding taint '$key:$effect' to node '$node'"
@@ -56,6 +55,7 @@ while true; do
 
   for node in $unreachable_nodes; do
     log "Processing unreachable node: $node"
+    sleep 20
     add_taint "$node" "node.kubernetes.io/out-of-service=nodeshutdown" "NoExecute"
     add_taint "$node" "node.kubernetes.io/out-of-service=nodeshutdown" "NoSchedule"
   done
