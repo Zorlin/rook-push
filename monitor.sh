@@ -28,9 +28,9 @@ add_taint() {
   local effect=$3
   log "$1 $2 $3"
 
-  if ! has_taint "$node" "$key" "$effect"; then
+  if ! has_taint "$node" "node.kubernetes.io/out-of-service" "$effect"; then
     log "Adding taint '$key:$effect' to node '$node'"
-    log 'kubectl taint nodes "$node" "$key=$effect"'
+    log 'kubectl taint nodes "$node" "$key:$effect"'
     kubectl taint nodes "$node" "$key:$effect"
   else
     log "Node '$node' already has taint '$key-$effect'"
