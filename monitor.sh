@@ -45,7 +45,7 @@ remove_taint() {
   local effect=$3
   if has_taint "$node" "$key" "$effect"; then
     log "Removing taint '$key:$effect' from node '$node'"
-    kubectl taint nodes "$node" "$key-$effect-"
+    kubectl taint nodes "$node" "$key:$effect-"
   fi
 }
 
